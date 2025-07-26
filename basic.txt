@@ -6,8 +6,8 @@ Client-Server Architecture:- client ask things and the server does what's reques
 Standardlized interface:- it rely on set of stnadard methods(GET,POST,PUT,DELETE) for interacting with resouces.
             GET- retrieving the resouces ex /students
             POST- creating the resouces ex /students
-            PUT- updating the resouces ex /student/1
-            DELETE- deleting the resouces ex /student/1
+            PUT- updating the resouces ex /student/1(id/pk)
+            DELETE- deleting the resouces ex /student/1(id/pk)
 EasyToRead Data:- it return the reponse in a stnadardized easy to read formats typically json or xml formats.
 
 

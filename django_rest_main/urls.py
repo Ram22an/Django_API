@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home,name='home'),
     # this is a web application endpoint
-    path('students/',include('students.urls')),
+    path('students/',include('students.urls'),name='students'),
 
 
 

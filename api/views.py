@@ -1,10 +1,31 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from students.models import Student
+from .serializers import StudentSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
 # Create your views here.
-def studentView(request):
-    Student={
-        'Id':1,
-        'name':'raman',
-        'class':'Computer Science'
-    }
-    return JsonResponse(Student)
+@api_view(['GET'])
+def studentView(request,student_id):
+    # student=get_object_or_404(Student,student_id=student_id)
+    # StudentJson={
+    #     'student_id':student.student_id,
+    #     'name':student.name,
+    #     'branch':student.branch
+    # }
+    # return JsonResponse(StudentJson)
+
+    # students=Student.objects.all()
+    # Student_List=list(students.values())
+    # to send any data in json format
+    # return JsonResponse(Student_List, safe=False)
+
+
+    # Serializers are used to convert complex data types, like querysets and model instances, into native Python datatypes that can then be easily rendered into JSON, XML or other content types.
+    if request.method=='GET':
+        students=get_object_or_404(Student,student_id=student_id)
+        serializer=StudentSerializer(students)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+

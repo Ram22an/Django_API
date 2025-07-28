@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 # Create your views here.
-@api_view(['GET','POST','PUT'])
+@api_view(['GET','POST','PUT','DELETE'])
 def studentView(request,student_id):
     # student=get_object_or_404(Student,student_id=student_id)
     # StudentJson={
@@ -41,7 +41,10 @@ def studentView(request,student_id):
             return Response(serializer.data,status=status.HTTP_200_OK)
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
+    elif request.method=='DELETE':
+        student=get_object_or_404(Student,student_id=student_id)
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET','POST'])
 def studentViewAll(request):

@@ -22,8 +22,8 @@ def studentView(request,student_id):
 
 
     # Serializers are used to convert complex data types, like querysets and model instances, into native Python datatypes that can then be easily rendered into JSON, XML or other content types.
+    students=get_object_or_404(Student,student_id=student_id)
     if request.method=='GET':
-        students=get_object_or_404(Student,student_id=student_id)
         serializer=StudentSerializer(students)
         return Response(serializer.data,status=status.HTTP_200_OK)
     elif request.method=='POST':
@@ -34,16 +34,14 @@ def studentView(request,student_id):
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     elif request.method=='PUT':
-        student=get_object_or_404(Student,student_id=student_id)
-        serializer=StudentSerializer(student,data=request.data)
+        serializer=StudentSerializer(students,data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data,status=status.HTTP_200_OK)
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     elif request.method=='DELETE':
-        student=get_object_or_404(Student,student_id=student_id)
-        student.delete()
+        students.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET','POST'])

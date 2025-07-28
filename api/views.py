@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 # Create your views here.
-@api_view(['GET','POST'])
+@api_view(['GET','POST','PUT'])
 def studentView(request,student_id):
     # student=get_object_or_404(Student,student_id=student_id)
     # StudentJson={
@@ -31,6 +31,14 @@ def studentView(request,student_id):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    elif request.method=='PUT':
+        student=get_object_or_404(Student,student_id=student_id)
+        serializer=StudentSerializer(student,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 

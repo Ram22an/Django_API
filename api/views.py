@@ -77,12 +77,12 @@ class EmployeesClass(APIView):
     
 
 class EmployeesClassPUT(APIView):
-    def get(self,request,emp_id):
-        employees=get_object_or_404(Employee,emp_id=emp_id)
+    def get(self,request,id):
+        employees=get_object_or_404(Employee,id=id)
         EmployeeSer=EmployeeSerializer(employees)
         return Response(EmployeeSer.data,status=status.HTTP_200_OK)
-    def put(self,request,empid):
-        employee=get_object_or_404(Employee,emp_id=empid)
+    def put(self,request,id):
+        employee=get_object_or_404(Employee,id=id)
         EmployeeSer=EmployeeSerializer(employee,data=request.data)
         if EmployeeSer.is_valid():
             EmployeeSer.save()

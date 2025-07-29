@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404
 from students.models import Student
-from .serializers import StudentSerializer
+from employees.models import Employee
+from .serializers import StudentSerializer, EmployeeSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 # Create your views here.
 @api_view(['GET','POST','PUT','DELETE'])
 def studentView(request,student_id):
@@ -57,4 +59,13 @@ def studentViewAll(request):
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+class EmployeesClass(APIView):
+    def get(self,request):
+        employees=Employee.objects.all()
+        EmployeeSer=EmployeeSerializer(employees,many=True)
+        return Response(EmployeeSer.data,status=status.HTTP_200_OK)
 

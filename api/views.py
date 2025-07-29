@@ -68,4 +68,26 @@ class EmployeesClass(APIView):
         employees=Employee.objects.all()
         EmployeeSer=EmployeeSerializer(employees,many=True)
         return Response(EmployeeSer.data,status=status.HTTP_200_OK)
+    def post(self,request):
+        EmployeeSer=EmployeeSerializer(data=request.data)
+        if EmployeeSer.is_valid():
+            EmployeeSer.save()
+            return Response(EmployeeSer.data,status=status.HTTP_201_CREATED)
+        return Response(EmployeeSer.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
+    
+
+class EmployeesClassPUT(APIView):
+    def get(self,request,emp_id):
+        employees=get_object_or_404(Employee,emp_id=emp_id)
+        EmployeeSer=EmployeeSerializer(employees)
+        return Response(EmployeeSer.data,status=status.HTTP_200_OK)
+    def put(self,request,empid):
+        employee=get_object_or_404(Employee,emp_id=empid)
+        EmployeeSer=EmployeeSerializer(employee,data=request.data)
+        if EmployeeSer.is_valid():
+            EmployeeSer.save()
+            return Response(EmployeeSer.data,status=status.HTTP_202_ACCEPTED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 

@@ -77,17 +77,21 @@ class EmployeesClass(APIView):
     
 
 class EmployeesClassPUT(APIView):
+    def get_object(self,id):
+        return get_object_or_404(Employee,id=id)
     def get(self,request,id):
-        employees=get_object_or_404(Employee,id=id)
+        employees=self.get_object(id)
         EmployeeSer=EmployeeSerializer(employees)
         return Response(EmployeeSer.data,status=status.HTTP_200_OK)
     def put(self,request,id):
-        employee=get_object_or_404(Employee,id=id)
+        employee= self.get_object(id)
         EmployeeSer=EmployeeSerializer(employee,data=request.data)
         if EmployeeSer.is_valid():
             EmployeeSer.save()
             return Response(EmployeeSer.data,status=status.HTTP_202_ACCEPTED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
+    def delete(self,request,id):
+        employee=self.get_object(id)
+        employee.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 

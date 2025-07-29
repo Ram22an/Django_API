@@ -5,6 +5,6 @@ urlpatterns = [
     path('students/<str:student_id>/',views.studentView,name='studentView'),
     
     # Class as view
-    path('employees/',views.EmployeesClass.as_view()),
+    path('employeesall/',views.EmployeesClass.as_view()),
     path('employees/<int:id>/',views.EmployeesClassPUT.as_view())
 ]

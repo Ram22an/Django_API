@@ -122,6 +122,15 @@ def studentViewAll(request):
 #         return self.destroy(request,id)
 
 
+# Generic based classes
+class EmployeesClass(generics.ListCreateAPIView):
+    queryset=Employee.objects.all()
+    serializer_class=EmployeeSerializer
+
+class EmployeesClassID(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Employee.objects.all()
+    serializer_class=EmployeeSerializer
+    lookup_field='id'
 
 
 

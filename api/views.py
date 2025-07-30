@@ -77,7 +77,7 @@ def studentViewAll(request):
 #         return Response(EmployeeSer.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
     
 
-# class EmployeesClassPUT(APIView):
+# class EmployeesClassID(APIView):
 #     def get_object(self,id):
 #         return get_object_or_404(Employee,id=id)
 #     def get(self,request,id):
@@ -96,23 +96,33 @@ def studentViewAll(request):
 #         employee.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class EmployeesClass(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
-    queryset=Employee.objects.all()
-    serializer_class=EmployeeSerializer
 
-    def get(self,request):
-        return self.list(request)
+
+
+# these are mixins based classes
+# class EmployeesClass(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+#     queryset=Employee.objects.all()
+#     serializer_class=EmployeeSerializer
+
+#     def get(self,request):
+#         return self.list(request)
     
-    def post(self,request):
-        return self.create(request)
+#     def post(self,request):
+#         return self.create(request)
 
-class EmployeesClassPUT(mixins.DestroyModelMixin,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,generics.GenericAPIView):
-    queryset=Employee.objects.all()
-    serializer_class=EmployeeSerializer
-    lookup_field='id'
-    def get(self,request,id):
-        return self.retrieve(request,id)
-    def put(self,request,id):
-        return self.update(request,id)
-    def delete(self,request,id):
-        return self.destroy(request,id)
+# class EmployeesClassID(mixins.DestroyModelMixin,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,generics.GenericAPIView):
+#     queryset=Employee.objects.all()
+#     serializer_class=EmployeeSerializer
+#     lookup_field='id'
+#     def get(self,request,id):
+#         return self.retrieve(request,id)
+#     def put(self,request,id):
+#         return self.update(request,id)
+#     def delete(self,request,id):
+#         return self.destroy(request,id)
+
+
+
+
+
+

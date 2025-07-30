@@ -6,5 +6,5 @@ urlpatterns = [
     
     # Class as view
     path('employeesall/',views.EmployeesClass.as_view()),
-    path('employees/<int:id>/',views.EmployeesClassPUT.as_view())
+    path('employees/<int:id>/',views.EmployeesClassID.as_view())
 ]

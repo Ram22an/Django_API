@@ -2,6 +2,10 @@ from django.urls import path,include
 from . import views
 from rest_framework.routers import DefaultRouter
 
+# | Parameter        | Affects                                | Visible in URL? |
+# | ---------------- | -------------------------------------- | --------------- |
+# | `'employees'`    | URL path                               | ✅ Yes          |
+# | `basename='...'` | Route names (reverse lookups, testing) | ❌ No           |
 
 router=DefaultRouter()
 router.register('employees',views.EmployeeViewSet,basename='employee')

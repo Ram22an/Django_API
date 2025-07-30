@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from rest_framework import mixins,generics
 # Create your views here.
 @api_view(['GET','POST','PUT','DELETE'])
 def studentView(request,student_id):
@@ -62,36 +63,56 @@ def studentViewAll(request):
 
 
 
-
-class EmployeesClass(APIView):
-    def get(self,request):
-        employees=Employee.objects.all()
-        EmployeeSer=EmployeeSerializer(employees,many=True)
-        return Response(EmployeeSer.data,status=status.HTTP_200_OK)
-    def post(self,request):
-        EmployeeSer=EmployeeSerializer(data=request.data)
-        if EmployeeSer.is_valid():
-            EmployeeSer.save()
-            return Response(EmployeeSer.data,status=status.HTTP_201_CREATED)
-        return Response(EmployeeSer.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
+# these two classes are without mixins
+# class EmployeesClass(APIView):
+#     def get(self,request):
+#         employees=Employee.objects.all()
+#         EmployeeSer=EmployeeSerializer(employees,many=True)
+#         return Response(EmployeeSer.data,status=status.HTTP_200_OK)
+#     def post(self,request):
+#         EmployeeSer=EmployeeSerializer(data=request.data)
+#         if EmployeeSer.is_valid():
+#             EmployeeSer.save()
+#             return Response(EmployeeSer.data,status=status.HTTP_201_CREATED)
+#         return Response(EmployeeSer.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
     
 
-class EmployeesClassPUT(APIView):
-    def get_object(self,id):
-        return get_object_or_404(Employee,id=id)
-    def get(self,request,id):
-        employees=self.get_object(id)
-        EmployeeSer=EmployeeSerializer(employees)
-        return Response(EmployeeSer.data,status=status.HTTP_200_OK)
-    def put(self,request,id):
-        employee= self.get_object(id)
-        EmployeeSer=EmployeeSerializer(employee,data=request.data)
-        if EmployeeSer.is_valid():
-            EmployeeSer.save()
-            return Response(EmployeeSer.data,status=status.HTTP_202_ACCEPTED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-    def delete(self,request,id):
-        employee=self.get_object(id)
-        employee.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+# class EmployeesClassPUT(APIView):
+#     def get_object(self,id):
+#         return get_object_or_404(Employee,id=id)
+#     def get(self,request,id):
+#         employees=self.get_object(id)
+#         EmployeeSer=EmployeeSerializer(employees)
+#         return Response(EmployeeSer.data,status=status.HTTP_200_OK)
+#     def put(self,request,id):
+#         employee= self.get_object(id)
+#         EmployeeSer=EmployeeSerializer(employee,data=request.data)
+#         if EmployeeSer.is_valid():
+#             EmployeeSer.save()
+#             return Response(EmployeeSer.data,status=status.HTTP_202_ACCEPTED)
+#         return Response(status=status.HTTP_400_BAD_REQUEST)
+#     def delete(self,request,id):
+#         employee=self.get_object(id)
+#         employee.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class EmployeesClass(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+    queryset=Employee.objects.all()
+    serializer_class=EmployeeSerializer
+
+    def get(self,request):
+        return self.list(request)
+    
+    def post(self,request):
+        return self.create(request)
+
+class EmployeesClassPUT(mixins.DestroyModelMixin,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,generics.GenericAPIView):
+    queryset=Employee.objects.all()
+    serializer_class=EmployeeSerializer
+    lookup_field='id'
+    def get(self,request,id):
+        return self.retrieve(request,id)
+    def put(self,request,id):
+        return self.update(request,id)
+    def delete(self,request,id):
+        return self.destroy(request,id)

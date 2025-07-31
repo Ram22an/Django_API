@@ -187,4 +187,17 @@ class CommentsView(generics.ListCreateAPIView):
 
 
 
+class BlogsViewPkValue(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Blogs.objects.all()
+    serializer_class=BlogSerializer
+    lookup_field='pk'
+
+
+class CommentsViewPkValue(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Comments.objects.all()
+    serializer_class=CommentSerializer
+    lookup_field='pk'
+
+
+
 

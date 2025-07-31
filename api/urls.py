@@ -25,4 +25,7 @@ urlpatterns = [
 
     path('blogs/',views.BlogsView.as_view()),
     path('comments/',views.CommentsView.as_view()),
+    
+    path('blogs/<int:pk>/',views.BlogsViewPkValue.as_view()),
+    path('comments/<int:pk>/',views.CommentsViewPkValue.as_view()),
 ]

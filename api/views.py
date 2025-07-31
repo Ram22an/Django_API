@@ -171,3 +171,20 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 
 
+from blogs.models import Blogs,Comments
+from blogs.serializers import BlogSerializer,CommentSerializer
+
+
+class BlogsView(generics.ListCreateAPIView):
+    queryset=Blogs.objects.all()
+    serializer_class=BlogSerializer
+
+
+
+class CommentsView(generics.ListCreateAPIView):
+    queryset=Comments.objects.all()
+    serializer_class=CommentSerializer
+
+
+
+

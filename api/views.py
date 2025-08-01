@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import mixins,generics,viewsets
+from .paginations import CustomePagination
 # Create your views here.
 @api_view(['GET','POST','PUT','DELETE'])
 def studentView(request,student_id):
@@ -178,6 +179,7 @@ from blogs.serializers import BlogSerializer,CommentSerializer
 class BlogsView(generics.ListCreateAPIView):
     queryset=Blogs.objects.all()
     serializer_class=BlogSerializer
+    pagination_class=CustomePagination
 
 
 

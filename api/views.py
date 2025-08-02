@@ -169,6 +169,7 @@ def studentViewAll(request):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset=Employee.objects.all()
     serializer_class=EmployeeSerializer
+    filterset_fields=['designation']
 
 
 

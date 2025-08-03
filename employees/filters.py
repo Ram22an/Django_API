@@ -8,9 +8,13 @@ class EmployeeFilter(django_filters.FilterSet):
     
     # icontains is used to check if any string is present in field
     EmpName=django_filters.CharFilter(field_name='emp_name',lookup_expr='icontains')
+    
+    # RangeFilter is used to get any field in range
+    ID=django_filters.RangeFilter(field_name='id')
+    
     class Meta:
         model=Employee
-        fields=['designation','EmpName']
+        fields=['designation','EmpName','ID']
 
 
 

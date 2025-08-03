@@ -164,12 +164,16 @@ def studentViewAll(request):
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# using custom filter
+from employees.filters import EmployeeFilter
+
 
 # class using model view set
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset=Employee.objects.all()
     serializer_class=EmployeeSerializer
     filterset_fields=['designation']
+    filterset_class=EmployeeFilter
 
 
 

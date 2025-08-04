@@ -186,7 +186,12 @@ class BlogsView(generics.ListCreateAPIView):
     serializer_class=BlogSerializer
     pagination_class=CustomePagination
     filter_backends=[SearchFilter]
-    search_fields=['blog_title']
+    search_fields=['blog_title','blog_body']
+    # search_fields=['^blog_title'] this is a search modifier for any string starts with
+    # '=blog_title' It only finds matches where the field value is exactly the same as the search term. The case-sensitivity of this match depends on your database's configuration.
+    # '@blog_title' Think of this as the difference between a simple "Find" command (like Ctrl+F) and a powerful search engine like Google
+    # '$blog_title' This modifier lets you search for a specific pattern instead of just simple text
+    
 
 
 class CommentsView(generics.ListCreateAPIView):

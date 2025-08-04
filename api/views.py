@@ -179,13 +179,14 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 from blogs.models import Blogs,Comments
 from blogs.serializers import BlogSerializer,CommentSerializer
-
+from rest_framework.filters import SearchFilter
 
 class BlogsView(generics.ListCreateAPIView):
     queryset=Blogs.objects.all()
     serializer_class=BlogSerializer
     pagination_class=CustomePagination
-
+    filter_backends=[SearchFilter]
+    search_fields=['blog_title']
 
 
 class CommentsView(generics.ListCreateAPIView):

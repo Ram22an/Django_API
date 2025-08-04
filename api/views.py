@@ -179,19 +179,21 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 from blogs.models import Blogs,Comments
 from blogs.serializers import BlogSerializer,CommentSerializer
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter,OrderingFilter
 
 class BlogsView(generics.ListCreateAPIView):
     queryset=Blogs.objects.all()
     serializer_class=BlogSerializer
     pagination_class=CustomePagination
-    filter_backends=[SearchFilter]
+    filter_backends=[SearchFilter,OrderingFilter]
     search_fields=['blog_title','blog_body']
     # search_fields=['^blog_title'] this is a search modifier for any string starts with
     # '=blog_title' It only finds matches where the field value is exactly the same as the search term. The case-sensitivity of this match depends on your database's configuration.
     # '@blog_title' Think of this as the difference between a simple "Find" command (like Ctrl+F) and a powerful search engine like Google
     # '$blog_title' This modifier lets you search for a specific pattern instead of just simple text
-    
+
+    ordering_fields=['id','blog_title']
+
 
 
 class CommentsView(generics.ListCreateAPIView):

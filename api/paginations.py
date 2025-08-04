@@ -14,6 +14,6 @@ class CustomePagination(PageNumberPagination):
             'previous':self.get_previous_link(),
             'count':self.page.paginator.count,
             'page_size':self.page_size,
-            'result':data
+            'results':data
         })
 
